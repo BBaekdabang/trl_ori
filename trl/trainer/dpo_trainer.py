@@ -699,7 +699,11 @@ class DPOTrainer(Trainer):
                     pad_value = 0
                 concatenated_key = k.replace("chosen", "concatenated")
                 concatenated_batch[concatenated_key] = pad_to_length(batch[k], max_length, pad_value=pad_value)
+                
+        print(batch)
+        print("***********************")
         for k in batch:
+            print(k)
             if k.startswith("rejected") and isinstance(batch[k], torch.Tensor):
                 if "labels" in k or is_encoder_decoder:
                     pad_value = label_pad_token_id
@@ -708,6 +712,7 @@ class DPOTrainer(Trainer):
                 elif k.endswith("_attention_mask"):
                     pad_value = 0
                 concatenated_key = k.replace("rejected", "concatenated")
+                
                 concatenated_batch[concatenated_key] = torch.cat(
                     (
                         concatenated_batch[concatenated_key],
@@ -715,7 +720,7 @@ class DPOTrainer(Trainer):
                     ),
                     dim=0,
                 ).to(device=device)
-        print(concatenated_batch)
+        #print(concatenated_batch)
         tmp = True
         if tmp :
             raise Exception("Finish")
