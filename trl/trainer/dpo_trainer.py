@@ -614,7 +614,8 @@ class DPOTrainer(Trainer):
                     batch[f"{k}{type_key}"] = tokens
         print("Tokenize")
         print(batch)
-        print("END")
+        print("hello")
+        
         else:
             chosen_tokens = self.tokenizer(
                 chosen, truncation=True, max_length=self.max_target_length, add_special_tokens=True
