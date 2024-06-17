@@ -715,13 +715,15 @@ class DPOTrainer(Trainer):
                     ),
                     dim=0,
                 ).to(device=device)
-
+        print(concatenated_batch)
+        if :
+            raise Exception("Finish")
         if is_encoder_decoder:
             concatenated_batch["concatenated_input_ids"] = batch["prompt_input_ids"].repeat(2, 1).to(device=device)
             concatenated_batch["concatenated_attention_mask"] = (
                 batch["prompt_attention_mask"].repeat(2, 1).to(device=device)
             )
-
+        
         return concatenated_batch
 
     def dpo_loss(
