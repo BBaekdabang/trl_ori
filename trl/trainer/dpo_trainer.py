@@ -690,6 +690,7 @@ class DPOTrainer(Trainer):
             max_length = max(batch["chosen_input_ids"].shape[1], batch["rejected_input_ids"].shape[1])
 
         for k in batch:
+            print(k)
             if k.startswith("chosen") and isinstance(batch[k], torch.Tensor):
                 if "labels" in k or is_encoder_decoder:
                     pad_value = label_pad_token_id
@@ -699,9 +700,9 @@ class DPOTrainer(Trainer):
                     pad_value = 0
                 concatenated_key = k.replace("chosen", "concatenated")
                 concatenated_batch[concatenated_key] = pad_to_length(batch[k], max_length, pad_value=pad_value)
-                
+        print("Below")
         for k in batch:
-            
+            print(k)
             if k.startswith("rejected") and isinstance(batch[k], torch.Tensor):
                 if "labels" in k or is_encoder_decoder:
                     pad_value = label_pad_token_id
