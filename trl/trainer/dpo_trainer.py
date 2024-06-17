@@ -836,6 +836,7 @@ class DPOTrainer(Trainer):
         )
 
         print(concatenated_batch)
+        print("hello")
         len_chosen = batch["chosen_labels"].shape[0]
         tmp = True
         if tmp :
