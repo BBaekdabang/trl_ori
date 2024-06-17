@@ -616,31 +616,31 @@ class DPOTrainer(Trainer):
         print(batch)
         print("hello")
         
-        else:
-            chosen_tokens = self.tokenizer(
-                chosen, truncation=True, max_length=self.max_target_length, add_special_tokens=True
+    else:
+        chosen_tokens = self.tokenizer(
+            chosen, truncation=True, max_length=self.max_target_length, add_special_tokens=True
+        )
+        rejected_tokens = self.tokenizer(
+            rejected, truncation=True, max_length=self.max_target_length, add_special_tokens=True
+        )
+        prompt_tokens = self.tokenizer(
+            prompt, truncation=True, max_length=self.max_prompt_length, add_special_tokens=True
+        )
+
+        batch["chosen_labels"] = chosen_tokens["input_ids"]
+        batch["rejected_labels"] = rejected_tokens["input_ids"]
+        batch["prompt_input_ids"] = prompt_tokens["input_ids"]
+        batch["prompt_attention_mask"] = prompt_tokens["attention_mask"]
+
+        if model is not None and hasattr(model, "prepare_decoder_input_ids_from_labels"):
+            batch["rejected_decoder_input_ids"] = model.prepare_decoder_input_ids_from_labels(
+                labels=torch.tensor(batch["rejected_labels"])
             )
-            rejected_tokens = self.tokenizer(
-                rejected, truncation=True, max_length=self.max_target_length, add_special_tokens=True
-            )
-            prompt_tokens = self.tokenizer(
-                prompt, truncation=True, max_length=self.max_prompt_length, add_special_tokens=True
+            batch["chosen_decoder_input_ids"] = model.prepare_decoder_input_ids_from_labels(
+                labels=torch.tensor(batch["chosen_labels"])
             )
 
-            batch["chosen_labels"] = chosen_tokens["input_ids"]
-            batch["rejected_labels"] = rejected_tokens["input_ids"]
-            batch["prompt_input_ids"] = prompt_tokens["input_ids"]
-            batch["prompt_attention_mask"] = prompt_tokens["attention_mask"]
-
-            if model is not None and hasattr(model, "prepare_decoder_input_ids_from_labels"):
-                batch["rejected_decoder_input_ids"] = model.prepare_decoder_input_ids_from_labels(
-                    labels=torch.tensor(batch["rejected_labels"])
-                )
-                batch["chosen_decoder_input_ids"] = model.prepare_decoder_input_ids_from_labels(
-                    labels=torch.tensor(batch["chosen_labels"])
-                )
-
-        return batch
+    return batch
 
     @contextmanager
     def null_ref_context(self):
