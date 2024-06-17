@@ -718,17 +718,14 @@ class DPOTrainer(Trainer):
                     ),
                     dim=0,
                 ).to(device=device)
-        print(concatenated_batch)
-        tmp = True
-        print("***********************************")
+
         if is_encoder_decoder:
             concatenated_batch["concatenated_input_ids"] = batch["prompt_input_ids"].repeat(2, 1).to(device=device)
             concatenated_batch["concatenated_attention_mask"] = (
                 batch["prompt_attention_mask"].repeat(2, 1).to(device=device)
             )
-        print(concatenated_batch)
-        if tmp :
-            raise Exception("Finish")
+
+
         return concatenated_batch
 
     def dpo_loss(
@@ -840,7 +837,9 @@ class DPOTrainer(Trainer):
 
         print(concatenated_batch)
         len_chosen = batch["chosen_labels"].shape[0]
-
+        tmp = True
+        if tmp :
+            raise Exception("Finish")
         model_kwargs = (
             {
                 "labels": concatenated_batch["concatenated_labels"],
