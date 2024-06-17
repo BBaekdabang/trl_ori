@@ -716,7 +716,8 @@ class DPOTrainer(Trainer):
                     dim=0,
                 ).to(device=device)
         print(concatenated_batch)
-        if :
+        tmp = True
+        if tmp :
             raise Exception("Finish")
         if is_encoder_decoder:
             concatenated_batch["concatenated_input_ids"] = batch["prompt_input_ids"].repeat(2, 1).to(device=device)
