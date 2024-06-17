@@ -828,7 +828,8 @@ class DPOTrainer(Trainer):
     def concatenated_forward(
         self, model: nn.Module, batch: Dict[str, Union[List, torch.LongTensor]]
     ) -> Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor, torch.FloatTensor]:
-        
+        print(batch)
+        print("*****************************")
         concatenated_batch = self.concatenated_inputs(
             batch,
             is_encoder_decoder=self.is_encoder_decoder,
@@ -836,6 +837,8 @@ class DPOTrainer(Trainer):
             padding_value=self.padding_value,
             device=self.accelerator.device,
         )
+
+        print(concatenated_batch)
         len_chosen = batch["chosen_labels"].shape[0]
 
         model_kwargs = (
