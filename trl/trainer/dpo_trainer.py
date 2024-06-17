@@ -700,6 +700,9 @@ class DPOTrainer(Trainer):
                     pad_value = 0
                 concatenated_key = k.replace("chosen", "concatenated")
                 concatenated_batch[concatenated_key] = pad_to_length(batch[k], max_length, pad_value=pad_value)
+        print("a")
+        print(concatenated_batch)
+        print("b")
         print("Below")
         for k in batch:
             print(k)
