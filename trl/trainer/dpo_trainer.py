@@ -612,7 +612,9 @@ class DPOTrainer(Trainer):
                     if type_key == "token_type_ids":
                         continue
                     batch[f"{k}{type_key}"] = tokens
-
+        print("Tokenize")
+        print(batch)
+        print("END")
         else:
             chosen_tokens = self.tokenizer(
                 chosen, truncation=True, max_length=self.max_target_length, add_special_tokens=True
@@ -681,7 +683,7 @@ class DPOTrainer(Trainer):
         padding_value: int = 0,
         device: Optional[torch.device] = None,
     ) -> Dict[str, torch.LongTensor]:
-        
+        print(batch)
         concatenated_batch = {}
 
         if is_encoder_decoder:
