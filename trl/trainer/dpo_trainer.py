@@ -710,7 +710,7 @@ class DPOTrainer(Trainer):
                 elif k.endswith("_attention_mask"):
                     pad_value = 0
                 concatenated_key = k.replace("rejected", "concatenated")
-                print(batch[k])
+                
                 concatenated_batch[concatenated_key] = torch.cat(
                     (
                         concatenated_batch[concatenated_key],
@@ -718,16 +718,17 @@ class DPOTrainer(Trainer):
                     ),
                     dim=0,
                 ).to(device=device)
-        #print(concatenated_batch)
+        print(concatenated_batch)
         tmp = True
-        if tmp :
-            raise Exception("Finish")
+        print("***********************************")
         if is_encoder_decoder:
             concatenated_batch["concatenated_input_ids"] = batch["prompt_input_ids"].repeat(2, 1).to(device=device)
             concatenated_batch["concatenated_attention_mask"] = (
                 batch["prompt_attention_mask"].repeat(2, 1).to(device=device)
             )
-        
+        print(concatenated_batch)
+        if tmp :
+            raise Exception("Finish")
         return concatenated_batch
 
     def dpo_loss(
