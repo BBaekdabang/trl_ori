@@ -613,9 +613,9 @@ class DPOTrainer(Trainer):
                         continue
                     batch[f"{k}{type_key}"] = tokens
 
-        print("Tokenize")
-        print(batch)
-        print("Hello")
+            print("Tokenize")
+            print(batch)
+            print("Hello")
         
         else:
             chosen_tokens = self.tokenizer(
